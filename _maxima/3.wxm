@@ -1,0 +1,258 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+H03 - Funktionen in mehreren Variablen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Zusammenfassung S03
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Definition Funktion
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Jedem Element der Definitionsmenge wird genau ein Element der Wertemenge zugeordnet
+
+Bisher: f(x)
+- Jedem x Wert wird genau ein y Wert zugeordnet
+
+Jetzt: f(x, y)
+- Jedem geordneten Paar (x, y) wird genau ein Funktionswert f(x, y) zugeordnet
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Funktionen in einer Variable konnten bisher im 2 dimensionalen Raum dargestellt werden,
+eine Funktion mit 2 Variablen benötigt nun 3 Dimensionen zur Darstellung!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Bsp.: y*e^x
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(y * exp(x), [x,0,5], [y,-5,5])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Partielle Ableitung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Man bildet die partielle Ableitung f'(x, y), 
+indem man nach der angezeigten Variable ableitet und alle anderen Variablen als konstant betrachtet.
+
+Bisher: f'(x)
+- Ableitung von f(x) nach x
+
+Jetzt: f'(x, y)
+- Ableitung von fx oder fy nach entweder x oder y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Buch Nr.: 5.13
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+sin(x)*cos(y)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a1z: sin(x)*cos(y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a1z_x: diff(a1z, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a1z_y: diff(a1z, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(a1z, [x, -5, 5], [y, -5, 5], [color_bar]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Ansatz einer Flächendiskussion
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie durch die Farbbeschreibung sichtbar hat die Funktion 3 Häufungspunkte auf sowohl x, als auch y Achse.
+Die Maxima und Minima bleiben anscheinend bestehen.
+
+Bekannt ist, dass die Ableitung einer Funktion 0 gesetzt die Extremwerte liefert,
+dies sollte auch im 3-dimensionalen Modell möglich sein wenn man nach einer bestimmten Variable löst.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(a1z_x = 0, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(a1z_y = 0, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Auf 2 Stellen getestet erkennt man anhand der Abbildung, dass die Annahme zutrifft!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Abgeleitet nach jeweils x und y
+   [wxMaxima: subsubsect end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+wxplot3d([a1z_x, a1z_y, [x, -5, 5], [y, -5, 5]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: subsect start ]
+x^2/9 + y^2/4
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a2z: x^2/9+y^2/4;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a2z_x: diff(a2z, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a2z_y: diff(a2z, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(a2z, [x,-5,5], [y,-5,5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abgeleitet nach jeweils x und y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+wxplot3d([a2z_x, a2z_y, [x,-5,5], [y,-5,5]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+y^2/9 - x^2/36
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a3z: y^2/9 - x^2/36;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a3z_x: diff(a3z, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a3z_y: diff(a3z, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(a3z, [x, -5, 5], [y, -5, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abgeleitet nach jeweils x und y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+wxplot3d([a3z_x, a3z_y, [x, -5, 5], [y, -5, 5]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+sqrt(25 - x^2 + y^2)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4z: sqrt(25 - x^2 + y^2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4z_x: diff(a4z, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a4z_y: diff(a4z, y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d(a4z, [x, -5, 5], [y, -5, 5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abgeleitet nach jeweils x und y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d([a4z_x, a4z_y, [x, -5, 5], [y, -5, 5]]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Negative x Werte mit verschiedenen y Werten ergeben interessante Muster
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot3d([a4z_x, a4z_y, [x, -10, -5], [y, -5, 5]]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

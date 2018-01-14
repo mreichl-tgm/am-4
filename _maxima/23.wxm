@@ -1,0 +1,173 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Numerische Verfahren zur Lösung von DGL
+(Runge-Kutta-Verfahren)
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Theorie
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dgl: 'diff(y, x) + 2 * y = 52 * sin(3 * x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: y = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Funktion in zwei Variablen wie bei der Richtungspfeil Methode. 
+Um diese Funktion zu erhalten wird nach y' aufgelöst.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dgl: solve(dgl, 'diff(y,x))[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun kann y' als f(x, y) dargestellt werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(y0, dgl);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+1. Verbesserung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nicht Schrittwerte 1 sondern h
+
+[x0 + h, y0 + h * f(x0, y0)]
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+2. Verbesserung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gewogenes Mittel aus 4 Steigungen (k1, k2, k3, k4)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Vorgehen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Schrittwerte
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+xI                  xII = xI + h / 2        xIII = xI + h / 2           xIV = xI + h
+yI                  yII = yI + kI / 2       yIII = yI + kII / 2         yIV = yI + kIII
+kI = f(xI, yI)      kII = f(xII, yII)       kIII = f(xIII, yIII)        kIV = f(xIV, yIV)
+
+k = (kI + 2 * kII + 2 * kIII + kIV) / 6
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Beispiel
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Analytische Lösung: 12 * exp(-2 * x) + 8 * sin(3 * x) - 12 * cos(3 * x) ^ (y0 +f(x0, y0))
+Vergleich mit rungekutter mit den Abständen 1 / 100, 1 / 20.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angaben
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Angegeben ist eine DGL, sowie eine Nebenbedingung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dgl: 'diff(y, x) + 2 * y = 52 * sin(3 * x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+nb: [[x=0, y=0]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Methode
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rungekutta(f, x0, y0, h, nmax):= block(
+    print("Funktion: ", f),
+    print("x0:", x0, "y0:", y0, "h:", h, "nmax:", nmax),
+    list: [],
+    xi: x0,
+    yi: y0,
+    /* Steigung 0 */
+    xI: x0,
+    yI: y0,
+    kI: subst([x = xI, y = yI], f) * h,
+    /* Steigung 1 */
+    xII: xI + h / 2,
+    yII: yI + kI / 2,
+    kII: subst([x = xII, y = yII], f) * h,
+    /* Steigung 2 */
+    xIII: xII,
+    yIII: yI + kII / 2,
+    kIII: subst([x = xIII, y = yIII], f) * h,
+    /* Steigung 3 */
+    xIV: xI + h,
+    yIV: yI + kIII,
+    kIV: subst([x = xIV, y = yIV], f) * h,
+    /* Mittlere Steigung */
+    k: ratsimp(kI + 2 * kII + 2 * kIII + k * kIV) / 6, numer,
+    /* Iteration */
+    for i: 1 thru nmax do (
+        xi: xi + h,
+        yi: yi + k,
+        list: append(list, [[xi, yi]])
+    ),
+    /* Substitution */
+    print("Finale Funktion:", subst([x = xi, y = yi], f)),
+    print("Liste an Werten:", list),
+    list
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rungekutta(rhs(dgl), rhs(nb[1][1]), rhs(nb[1][2]), 1 / 20, 10);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

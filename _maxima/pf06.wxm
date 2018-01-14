@@ -1,0 +1,709 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Portfolio 08: DGL 1. Ordnung und ihre Anwendung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Einführung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Definition
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Eine Differentialgleichung liegt vor, 
+wenn eine gesuchte Größe in wenigstens einer Ableitung einer Gleichung vorkommt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bsp.:   y'  = 3x + 1
+        y   = 3x²/3 + x + C
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Ergebnis einer Differentialgleichung ist eine Funktionenschar, auch "Allgemeine Lösung" genannt, 
+welche aufgrund der Vieldeutigkeit (Integrationskonstante C) der Integration zustande kommt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bsp.:   y'  = 3x + 1    &   y(0) = 1
+        y   = 3x²/2 + x + C
+        1   = 3*0/2 + 0 + C
+                      --> C = 1
+        y   = 3x²/2 + x + 1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wird durch eine weitere Bedingung die Integrationskonstante numerisch festgelegt,
+so erhält man genau eine Kurve der Funktionenschar.
+Diese wird "Spezielle Lösung" oder "Partikuläre Lösung" genannt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wird die Integrationskonstante durch eine Anfangsbedingung festgelegt,
+nennt man diese eine Anfangswertaufgabe.
+Sind diese an verschiedenen Stellen festgelegt spricht man von einer Randwertaufgabe.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Nomenklatur
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+y' = dy / dx    ' bedeutet: Ableitung nach dem Ort x    (Ortsangabe)
+y° = dy / dt    ° bedeutet: Ableitung nach der Zeit t   (Zeitangabe)
+Differentialgleichungen beschreiben die Änderung einer gesuchten Größe
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Ordnung einer DGL gibt die höchste auftretende Ableitung an.
+Bsp.: y''       => DGL 2. Ordnung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Grad einer DGL gibt die höchste auftretende Potenz an, einschließlich ihrer Ableitungen.
+Bsp.: y' * 2^3  => DGL 3. Grades
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Richtungsfelder
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Fässt man y' als Funktion in 2 Variablen auf kann zu jedem (x|y) Paar ein Funktionswert der Richtung ermittelt werden.
+Zum Beispiel: 
+y' = 1 - 2y
+y' = f(x, y)
+f(0, 1) = -1    f(1, 1) = -1    f(2, 1) = -1
+f(0, 0) = 1     f(1, 0) = 1     f(2, 0) = 1
+f(0, 2) = -3    f(1, 2) = -3    f(2, 2) = -3
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+In Maxima kann man dazu das Modul drawdf laden welches mittels wxdrawdf(function, *range, point range).
+Die Reichweite der eingesetzten Punkte wird dabei üblicherweise mittels solns_at(min, max) angegeben.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load(drawdf);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdrawdf([1 - 2*y], solns_at([0, 3]));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Berechnung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Trennung der Variablen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Separierbare Differentialgleichungen 1. Ordnung lassen sich durch die Methode ``Trennung der Variablen'' lösen.
+Das Vorgehen ist dabei klar und einfach anzuwenden. 
+
+Als Beispiel wird die Gleichung y' + 2*y = 1 mit der Nebenbedingung y(0) = 3 verwendet.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Isolieren von y'
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Ableitung y' muss zur Auflösung auf eine Seite gebracht werden.
+y' = 1 - 2*y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Ersetzung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+y' muss nun durch die Schreibweise dy/dx ersetzt werden.
+dy/dx = 1 - 2*y
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Trennung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun muss die Gleichung so aufgeteilt werden, dass sich dy auf einer und dx auf der anderen Seite befinden. dx sollte dabei alleine stehen.
+dy/(1-2y) = dx
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Integration
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nun müssen beide Seiten einzeln integriert werden:
+integrate(1/(1 - 2y) * dy) = integrate(dx)
+1/2*log(1 - 2*y) = x + C
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Berechnung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Jetzt kann nach y aufgelöst werden und man erhält die Allgemeine Lösung:
+ya = 1/2*(1-C*e^(-2x)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Einsetzen von Nebenbedingungen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wenn eine Nebenbedingung angegeben ist, kann diese in die Allgemeine Lösung eingesetzt werden. 
+Dadurch erhält man einen bestimmten Wert für die Integrationskonstante C.
+y(0) = 3    =>   C = -5
+
+Diese eingesetzt ergibt sich die Partielle Lösung:
+yp = 1/2*(1+5*e^(-2x)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Anwendung in Maxima
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Ableitung y' wird in Maxima unter der Schreibweise y*(dy/dx) benötigt, welche man mittels 'diff(y, x) erhält:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dgl01: 'diff(y, x) + 3*y*cos(x) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mittels der Funktion ode2(equation, var, params) kann nun nach y aufgelöst werden, wodurch man die allgemeine Lösung erhält:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y01a: ode2(dgl01, y, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Durch Einsetzen der Nebenbedingung in die allgemeine Lösung erhält man einen Wert für die Konstante C:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y01nb: solve(1 = subst(0, x, rhs(y01a)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Setzt man diesen ein erhält man die spezielle Lösung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y01c: subst(y01nb, y01a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tex(y01c);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+In wxMaxima nutzt man für dieses Vorgehen die Funktion ic1(equation, *values):
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y01p: ic1(y01a, x=0, y=1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tex(y01p);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Anwendung von DGL 1. Ordnung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+b_k: 5;
+b_y0: 10;
+b_K: 10000;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wachstumsmodelle
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wachstumsmodelle können einfach durch DGL dargestellt werden.
+Die Gleichung kann dann wie im Abschnitt 3 "Berechnung" aufgelöst werden, was in einer expliziten Wachstumsfunktion resultiert.
+
+Der Einfachheit halber wurde dieser Schritt hier übersprungen und nur die Gleichung, sowie die explizite Funktion angegeben.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Lineares Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unbeschränktes Wachstum um einen konstanten Faktor
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k
+y(t)    = kt + C
+y(t)    = k(0) + kt
+y(t)    = kt + C
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'diff(y, t) = k;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2('diff(y, t) = k, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ic1(ode2('diff(y, t) = k, y, t), t=0, y=k);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y(t) = k * t + y(0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Darstellung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(b_k*t*b_y0, [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Exponentielles Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unbeschränktes Wachstum um eine konstante Wachstumsrate
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k * y
+dy / dt = k * y
+dy / y  = k * dt
+ln(y)   = k * t + C
+y       = e^(k*t) * C
+y       = C * e^t       // e^k ist wie C konstant
+y       = C * a^t       // Eine beliebige Basis wird as Wachstumsfaktor bezeichnet
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yew:'diff(y, t) = k * y;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yewa: ode2(yew, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yewp: ic1(yewa, y=k, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y(t) = a^t * y(0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Darstellung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(b_k^t*b_y0, [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beschränktes Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k*(1 - y / K)      k ... Wachstumsrate
+                             K ... Beschränkungsfaktor
+dy      = k * (1 - y / K) * dt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ybw1: 'diff(y, t) = k * (1 - y / K);
+ybw2:'diff(y, t) = k * (K - y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ybw1a: expand(ode2(ybw1, y, t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ybw2a: expand(ode2(ybw2, y, t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(0, t, ybw1a);
+subst(0, t, ybw2a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(y0 - K, %c, ybw1a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(y0 - K, %c, ybw2a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Darstellung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(exp(-b_k*t)*(b_K*exp(b_k*t) + b_k - b_K), [t, 0, 2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(b_K-(b_K-b_y0)*exp(-b_k*t), [t, 0, 2]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Logistisches Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate, 
+auf Basis der Population, bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k * y * (1 - y / K)
+y(t)    = y(0) * K / (y(0) + K - y(0) * e^((-k) * t))
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1: 'diff(y, t) = k * y * (K - y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1a: logcontract(ode2(ylw1, y, t)) * K * k;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1a: exp(rhs(ylw1a)) = exp(lhs(ylw1a));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1a: solve(expand(ylw1a^(-1)), y)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1a_c: subst(y0, y, solve(subst(0, t, ylw1a), %c)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1p: subst(ylw1a_c, ylw1a);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1p: y = - K / -((exp(-K*k*t)*(K-y0)-y0) / y0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1p;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+oder
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylwp: y = K * 1 / (1 + exp(-K*k*t)*(K/y0 - 1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Darstellung:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ylw1p_plot: rhs(subst([K=b_K, k=b_k, y0=b_y0], ylw1p));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(ylw1p_plot, [t, 0, 0.0003]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Physik
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Kraft
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kräfte in der Physik können häufig durch Differentialgleichungen beschrieben werden, hier nur eine einfache Definition als Beispiel:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+v = 'diff(s, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a = 'diff(v, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F = m*a;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+v = ds / dt =>  s = integrate(v * dt)
+a = dv / dt =>  v = integrate(a * dt)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a = v^2*s/dt^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F: m*dv/dt;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F_R: b*v;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F = F_A - F_R;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als Beispiel zur Anwendung dieser Gleichungen wird hier auf das Beispiel 3.43) aus dem Unterricht zurückgegriffen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Am Ende des Hangs entspricht 0s mit 36km/h, daraus folgt y0 = 36.
+Es existiert kein Antrieb, daher F_A = 0.
+Die Gesamtmasse der Objekte entspricht 54kg. Die Kraft die ihnen entgegenwirkt entspricht 30kg/s*v.
+Aufgrund der Einheitsunterschiede sollte auf m/s umgerechnet werden, daher y0 = 36 / 3.6 m/s.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m: 54;
+F_R: 30 * v;
+F_A: 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zur Ermittlung der Funktion muss die Gleichung nach v gelöst werden.
+Da die Geschwindigkeit in F als Differentialgleichung angegeben ist, muss diese auch als solche gelöst werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F: m*'diff(v, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvt: F = F_A - F_R;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Lösung selbst kann wie gehabt mit der Funktion ode2(equation, var, params) gefunden werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvta: ode2(Fvt, v, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mittels ic1(equation, *values) wird eine partielle Lösung aus den angegebenen Werten ermittelt:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvtp: ic1(Fvta, v=10, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die partielle Lösung kann nun dargestellt werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rhs(Fvtp), [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Gleichung der Zeit bei welcher die Rodel 15 Meter zurückgelegt hat,
+kann durch Lösung von 15 = dem Integral der Lösung angegeben werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t_s15: solve(15 = integrate(rhs(Fvtp), t), t)[5];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die maximale Distanz welche zurückgelegt werden kann wird durch ein bestimmtes Integral zwischen 0 und der Höhe des Berges ermittelt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s0_10: integrate(rhs(Fvtp), t, 10, 0), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Rodel kann also einen Weg von 17.93 Meter zurücklegen.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

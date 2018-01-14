@@ -1,0 +1,75 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+H36 Vektorrechnung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: [0, 0];
+B: [5, 1];
+C: [6, y3];
+D: [x4, y4];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Vektoren AB und CD sind negativ parallel, es gilt -AB = CD.
+Ebenso verhält es sich mit BC und DA, also -BC = DA.
+
+Daher muss auch gelten B - A = C - D
+Also:   5 - 0 = 6 - x4      x4 = -1
+        1 - 0 = y3 - y4     y3 - y4 = 1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3: 6;
+x4: 1;
+y4: 5;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Eingesetzt:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: [0, 0];
+B: [5, 1];
+C: [6, y3];
+D: [x4, y4];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+AB: vector(A, B - A);
+BC: vector(B, C - B);
+CD: vector(C, D - C);
+DA: vector(D, A - D);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(
+    head_length = 0.2, 
+    head_angle = 20, 
+    proportional_axes = xy,
+    key_pos = center,
+    key="AB", color="blue", AB,
+    key="BC", color="red", BC,
+    key="CD", color="blue", CD,
+    key="DA", color="red", DA
+);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,205 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+S06 Fehlerfortpflanzung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Theorie
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei einer Messung ist es in der Regel nicht möglich genaue Daten zu erhalten,
+man hat daher immer eine gewisse Ungenauigkeit: einen Fehler.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Toleranzen werden mittels +- angegeben und mit dem griechischen Delta gekennzeichnet.
+Wie sich diese Fehler auf das Ergebnis auswirken kann man mittels 2er Grafiken erkennen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lx: [[1.4, 0.2], [1.6, 0.2]];
+lx1: [[1.4, 0.2], [1.4, 1.4^3]];
+lx2: [[0, 1.4^3], [1.4, 1.4^3]];
+lx3: [[1.6, 0.2], [1.6, 1.6^3]];
+lx4: [[0, 1.6^3], [1.6, 1.6^3]];
+lx5: [[1.01, 1.4^3], [1.01, 1.6^3]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([
+        x^3, 
+        [discrete, lx], [discrete,lx1], [discrete, lx2], [discrete, lx3], [discrete, lx4], [discrete, lx5]
+    ]
+    , [x, 1, 2], [y, 0, 10],
+    [color, blue, red, red, green, red, green, green],
+    [legend, "Funktion", "dx", "", "", "", "", "dR"],
+    [title, "Größeres x = Größere Ungenauigkeit"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lx10: [[1.4, 0.2], [1.6, 0.2]];
+lx11: [[1.4, 0.2], [1.4, 1.4^4]];
+lx12: [[0, 1.4^4], [1.4, 1.4^4]];
+lx13: [[1.6, 0.2], [1.6, 1.6^4]];
+lx14: [[0, 1.6^4], [1.6, 1.6^4]];
+lx15: [[1.01, 1.4^4], [1.01, 1.6^4]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([
+        x^4, 
+        [discrete, lx10], [discrete,lx11], [discrete, lx12], [discrete, lx13], [discrete, lx14], [discrete, lx15]
+    ]
+    , [x, 1, 2], [y, 0, 10],
+    [color, blue, red, red, green, red, green, green],
+    [legend, "Funktion", "dx", "", "", "", "", "dR"],
+    [title, "Größere Steigung = Größere Ungenauigkeit"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir sehen also delta R ist abhängig von der größe der Einzelfehler, sowie der Steigung der Funktion.
+Dies lässt sich mit folgender Gleichung beschreiben:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dR = abs(Rx(x0, y0) * dx) + abs(Ry(x0, y0) * dy);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Je mehr Variablen desto mehr Bestandteile hat die Gleichung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der relative Fehler in % kann nun berechnet werden indem man dR / R dividiert
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Bsp.: Zylinder
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_rh: r²*%pi*h;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+data: [
+    [r = 2*10^(-3), dr = 10^(-4)],
+    [h = 10*10^(-1), dh = 10^(-3)]
+];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V_rh_r: diff(V_rh, r, 1);
+V_rh_h: diff(V_rh, h, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+V: subst(data[2], subst(data[1], V_rh));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dV: abs(V_rh_r*dr) + abs(V_rh_h*dh);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Absoluter Fehler
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Absoluter Fehler dR = sum(Ri*di)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dV_abs: subst(data[2], subst(data[1], dV)), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Relativer Fehler
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Relativer Fehler rR = dR / R
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dV_rel: dV_abs / V, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Bedeutung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wir erkennen, dass r von höherer Bedeutung ist da dieser Wert eine größere Ungenauigkeit hat
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Veranschaulichung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxbarsplot(
+    [
+        "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", 
+        "Fehler"
+    ],
+    ordering = orderlessp,
+    box_width = 1,
+    fill_density = 1,
+    yrange = [0, 10]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxpiechart(
+    [
+        "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", "Minimum", 
+        "Fehler"
+    ],
+    fill_density = 1,
+    line_width = 1,
+    sector_colors = [yellow, orange]
+);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

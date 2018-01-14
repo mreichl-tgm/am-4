@@ -1,0 +1,393 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Lineare DGL 1. Ordnung mit konstanten Koeffizienten
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Linear ist eine DGL wenn sie wie folgt angeschrieben werden kann:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'diff(y, x) + p * y = s(x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Erste Ordnung bedeutet nur eine Ableitung. Linear bedeutet keine Potenz.
+Hier stellt p den konstanten Koeffizienten dar.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Lösung einer Lin. DGL 1. Ordnung mit konst. Koeffizienten (y' + p * y = s(x)) kann man immer wie folgt finden:
+1.) Allgemeine Lösung der homogenen DGL     y_M
+2.) Spezielle Lösung der partikulären DGL   y_P
+3.) Gesamtlösung entspricht y = y_M + y_P
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Austellen der Homogenen DGL
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Man setzt (willkürlich) die Störfunktion s(x) = 0
+Daraus folgt y' + p * y = 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Diese Gleichung ist durch Trennung der Variablen immer lösbar.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'diff(y, x) + p * y = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Aufstellen der partikulären DGL
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Variation der Konstanten
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie im Unterricht nicht besprochen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Lösungsansatz
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Je nach Gestalt der Störfunktion s(x) wird ein Lösungsansatz gewählt.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+s(x)                        |   Lösungsansatz
+----------------------------|-------------------------------------
+A_n * x^n + .. + A_0 * x^0  |   a_n * x^n + .. + a_n * x^n
+------------------------------------------------------------------
+A * sin(wx)                 |   a * sin(wx) + b * cos(wx)
+B * sin(wx)                 |   a * sin(wx) + b * cos(wx)
+A * sin(wx) + B * cos(wx)   |   a * sin(wx) + b * cos(wx)
+------------------------------------------------------------------
+A * e^(b * x)               |   a * e^(b * x)       wenn b = -p
+                            |   a * x * e^(b * x)   wenn b = p
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Lösungsansatz y_a wird in die inhomogene DGL eingesetzt und daraus die unbekannten Koeffizienten a, b, c ... berechnet.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beispiel: y' + 3 * y = x^2 + 3
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Störfunktion ist immer jene, welche den Parameter enthält.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'diff(y, x) + 3 * y = x^2 + 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Man sieht eine Polynomfunktion x^2 + 3, daher benötigen wir eine Polynomfunktion zweiten Grades
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ya = a*x^2 + b*x + c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Weitere Möglichkeiten:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 3;
+ya = c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 7 * x;
+ya = b * x + c;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 8*cos(4*x);
+ya = a * sin(4*x) + b*cos(4*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 3*exp(4*x);
+ya = a * exp(4*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 4*exp(3*x);
+ya = a * exp(3*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s(x) = 4*exp(-3*x);
+ya = a * x * exp(3*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beispiel: y' + 2 * y = 4 * x mit y(0) = 3
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Lösen der homogenen DGL
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sx: 'diff(y, x) + 2 * y = 4 * x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Störfunktion s(x) wir nullgesetzt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yh: lhs(sx) = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mittels ode2 können wir die homogene DGL yh berechnen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yh: ode2(yh, y, x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Finden der partikulären Lösung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Auf Basis der Störfunktion kann man nun einen Lösungsansatz finden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rhs(sx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ya: a * x + b;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Diesen kann man nun in die inhomogene DGL einsetzen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi: diff(ya, x) + 2 * ya = 4 * x;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Als nächstes sollten alle Klammern aufgelöst werden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi: ratsimp(yi);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das ganze wird umgeformt auf eine Standardschreibweise:
+x^1 * 2 * a + x^0 * (a + 2 * b) = x * 4 + x^0 * 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Koeffizientenvergleich
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Aus der Schreibweise können wir folgende Koeffizienten vergleichen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi_k1: 2 * a = 4;
+yi_k2: a + 2 * b = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Ein lineares Gleichungssystem kann einfach mit linsolve gelöst werden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi_k: linsolve([yi_k1, yi_k2], [a, b]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yp: subst(yi_k, ya);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Ermittlung der Gesamtlösung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx: y = yp + rhs(yh);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Einsetzen der Nebenbedingung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx_C: solve(subst(3, y, subst(0, x, yx)), %c);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx: subst(yx_C, yx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Beispiel: y' + 2 * y = 52 * sin(3 * x)  NB: y(0) = 0
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Homogene DGL
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sx: 'diff(y, x) + 2 * y = 52 * sin(3 * x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+s(x) wurde bereits berechnet daher entspricht yh = %c*%e^(-2*x)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yh: yh = %c*%e^(-2*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Partikuläre DGL
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+rhs(sx);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ya: a * sin(3*x) + b * cos(3 * x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi: ratsimp(diff(ya, x) + 2 * ya = rhs(sx));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Man kann wiederum die Koeffizienten vergleichen:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi_k1: 2*a - 3*b = 52;
+yi_k2: 3*a + 2*b = 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yi_k: linsolve([yi_k1, yi_k2], [a, b]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yp: subst(yi_k, ya);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Ermittlung der Gesamtlösung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx: y = rhs(yh) + yp;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx_C: solve(subst(0, y, subst(0, x, yx)), %c);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yx: subst(yx_C, yx);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

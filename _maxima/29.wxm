@@ -1,0 +1,131 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: title   start ]
+S29 Näherungsformeln
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Multiplikation nach Reihenentwicklung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beispiel
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es soll gezeigt werden, dass folgende Funktionen annähernd gleich sind
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_l: exp(-3/x)*sin(2*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_r: 2*x - 2*x^2/3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie man sieht liefert die Reihe zur Funktion allein nicht das erwünschte Ergebnis
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l: taylor(fx_l, x, 0, 3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Händisch multipliziert sieht man jedoch sofort den Zusammenhang.
+Die Reihe wird auf 2 Glieder begrenzt, da auch die zweite Funktion nur aus 2 Gliedern besteht.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_e: taylor(exp(-x/3), x, 0, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_s: taylor(sin(2*x), x, 0, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_e * tfx_l_s;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Integration nach Reihenentwicklung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Gu: float(0.5 + 1/sqrt(2*%pi) * integrate(exp(-x^2/2), x, 0, 1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1: taylor(exp(-x^2/2), x, 0, 10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Gut1: 0.5 + 1/sqrt(2*%pi) * integrate(t1, x, 0, u);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(subst(1, u, Gut1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Auswertung / Berechnung von Grenzwerten
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beispiel
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lim: limit(xsin(x)/x, x, 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tsin: taylor(sin(x), x, 0, 10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limtsin: limit(1/x * tsin, x, 0);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

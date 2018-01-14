@@ -1,0 +1,542 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Portfolio 01 (UW07)
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+- Funktionen in mehreren Variablen
+- Extremwerte von Funktionen in mehreren Variablen
+- Methode der kleinsten Quadrate
+- Fehlerfortpflanzung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Funktionen in mehreren Variablen
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Definition Funktion
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Jedem Element der Definitionsmenge wird genau ein Element der Wertemenge zugeordnet
+Bisher: f(x)
+- Jedem x Wert wird genau ein y Wert zugeordnet
+Jetzt: f(x, y)
+- Jedem geordneten Paar (x, y) wird genau ein Funktionswert f(x, y) zugeordnet
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Funktionen in einer Variable konnten bisher im 2 dimensionalen Raum dargestellt werden,
+eine Funktion mit 2 Variablen benötigt nun 3 Dimensionen zur Darstellung!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Partielle Ableitung
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Man bildet die partielle Ableitung f'(x, y), 
+indem man nach der angezeigten Variable ableitet und alle anderen Variablen als konstant betrachtet.
+
+Bisher: f'(x)
+- Ableitung von f(x) nach x
+
+Jetzt: f'(x, y)
+- Ableitung von fx oder fy nach entweder x oder y
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Vorgehensweise
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Basis
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wichtig für uns sind auf jeden Fall die Funktion und ihre ersten Ableitungen gegen x und y.
+Um zu wissen worauf man sich einlässt ist ein Plot immer von Vorteil!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+z: sin(x)*cos(y);
+z_x: diff(z, x);
+z_y: diff(z, y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot3d(z, [x, -5, 5], [y, -5, 5], [color_bar]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Flächendiskussion
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wie durch die Farbbeschreibung sichtbar hat die Funktion 3 Häufungspunkte auf sowohl x, als auch y Achse.
+Die Maxima und Minima bleiben anscheinend bestehen.
+Bekannt ist, dass die Ableitung einer Funktion 0 gesetzt die Extremwerte liefert,
+dies sollte auch im 3-dimensionalen Modell möglich sein wenn man nach einer bestimmten Variable löst.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(z_x = 0, x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(z_y = 0, y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Auf 2 Stellen getestet erkennt man anhand der Abbildung, dass die Annahme zutrifft!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Extremwerte von Funktionen in mehreren Variablen
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Bisher konnten wir Extremwerte einer Funktion anhand der ersten Ableitung bestimmen 
+und mit der zweiten prüfen ob es sich um Maxima, Minima oder Wendepunkte handelt.
+-> Weitere Informationen: Portfolio - Kurvendiskussion
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Bei Funktionen in mehreren Variablen ist eine eindeutige Ableitung nicht mehr möglich,
+wodurch mit den Ableitungen beider Variablen gearbeitet werden muss.
+In einem Satz ausgedrückt:
+Extremwerte sind jene Orte an denen alle Partiellen Ableitungen gleich 0 sind
+=> fx(x, y) = fy(x, y) = 0
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Extremwerte in mehreren Variablen können entweder Quellen, Senken oder Sattelpunkte sein.
+Diese Eigenschaften werden wie früher durch einsetzen der Koordinaten aus der ersten in die zweite Ableitung bestimmt.
+Hierbei muss natürlich beachtet werden, dass alle Achsen dieselbe Krümmungsrichtung haben müssen,
+damit es sich NICHT um einen Sattelpunkt handelt und dies ist immer der Fall wenn gilt:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+fxx * fyy - (fxy)^2 > 0
+ist nun     fxx     > 0  handelt es sich um eine Senke
+            fxx     < 0                          Quelle
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Vorgehensweise
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Basis
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Zu beginn benötigen wir die Funktion sowie die ersten und zweiten Ableitungen nach x und y.
+Ein Plot des Ganzen ist natürlich immer von Vorteil!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+z: 1/3*x^3 - x^2 + y^3 - 27*y;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+z_x: diff(z, x);
+z_xx: diff(z_x, x);
+z_y: diff(z, y);
+z_yy: diff(z_y, y);
+z_xy: diff(z_x, y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot3d(z, [x, -5, 5], [y, -5, 5]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Berechnen der Extremwerte
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Die Extremwerte können einfach mittels solve berechnet werden
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+z_extrem: solve([z_x = 0, z_y = 0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Berechnen der Krümmung zur Erkennung von Quellen, Senken und Sattelpunkten
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Man kann das Erkennen von Extremwerte in einem bestimmten Ablauf generalisieren:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Zeile 1:    fxx * fyy - (fxy)^2     Erkennung von Sattelpunkten
+Zeile 2:    fxx(x, y)               Erkennung von Quellen und Senken
+Zeile 3:    f(x, y)                 Bestimmung der Position
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+check: z_xx * z_yy - (z_xy)^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Wir testen das an allen Punkten
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+subst(z_extrem[1], check);
+subst(z_extrem[1], z_xx);
+subst(z_extrem[1], z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Kein Sattelpunkt, Quelle, 54        => Maximum von 54 an f(0, -3)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+subst(z_extrem[2], check);
+subst(z_extrem[2], z_xx);
+subst(z_extrem[2], z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sattelpunkt, 158/3
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+subst(z_extrem[3], check);
+subst(z_extrem[3], z_xx);
+subst(z_extrem[3], z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Sattelpunkt, -54
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+subst(z_extrem[4], check);
+subst(z_extrem[4], z_xx);
+subst(z_extrem[4], z);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Kein Sattelpunkt, Senke, -166/3     => Minimum von -166/3 an f(2, 3)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Methode der kleinsten Quadrate
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Messungen haben in der Regel keine idealen Abhängigkeiten sondern Tendenzen.
+Diese sollen durch mathematische Formeln beschrieben werden.
+
+Man erhält aus einer Matrix an Werten Variablen, 
+welche man an eine Funktion angleichen kann,
+um Vorhersagen aus den Bereits existierenden Ergebnissen treffen zu können.
+
+So nehmen wir zum Beispiel die Punkte A, B und C welche wir an eine lineare Funktion
+y = k * x + d angleichen.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Vorgehensweise
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Basis
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Zu Beginn benötigen wir eine Gleichung an die wir uns annähern wollen und eine Sammlung von Punkten,
+wenn möglich als Matrix.
+Zusätzlich werden wir die Ableitungen gegen alle Variablen brauchen.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+data: apply(matrix, [
+    [2, 1],
+    [3, 3],
+    [5, 4]
+]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+fab: a * x + b;
+fab_a: diff(fab, a);
+fab_b: diff(fab, b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Gesucht ist eine passende Gerade welche den gleichen Abstand zu allen Punkten hat.
+=> Normaler Abstand zu allen Punkten ist gleich
+=> Vertikaler Abstand ist       möglichst klein
+=> AA' + BB' + CC'              möglichst klein
+=> (AA')^2 + (BB')^2 + (CC')^2  möglichst klein
+=> F(a, b) = sum(a * xi + b - yi, i, 1, m)
+Eine möglichst kleine Stelle erhalten wir durch suchen der Senken!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Linear Regression
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Zur einfacheren Verwendung der Formel wird ein Block verwendet:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+linregr(f, points):=block(
+    sum((subst(points[i][1], x, f) - points[i][2]) ^ 2, i, 1, length(points))
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f_reg: linregr(fab, data);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Mit diesem Ergebnissen lassen sich nun Ableitungen null setzen wodurch wir die Extremwerte bestimmen können.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f_reg_a: diff(f_reg, a);
+f_reg_aa: diff(f_reg_a, a);
+f_reg_b: diff(f_reg, b);
+f_reg_bb: diff(f_reg_b, b);
+f_reg_ab: diff(f_reg_a, b);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f_reg_solve: solve([f_reg_a = 0, f_reg_b = 0]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+subst(f_reg_solve[1][2], subst(f_reg_solve[1][1], fab));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Abgeleitet und nullgesetzt erhalten wir nur 2 mögliche Werte und davon jeweils einen pro Variable.
+Diese setzen wir nun in die Lineare Gleichung ein und erhalten die Regressionsgerade.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f_reg_g: subst(f_reg_solve, fab);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+AA: [discrete, [data[1], [data[1][1], subst(data[1][1], x, f_reg_g)]]];
+BB: [discrete, [data[2], [data[2][1], subst(data[2][1], x, f_reg_g)]]];
+CC: [discrete, [data[3], [data[3][1], subst(data[3][1], x, f_reg_g)]]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [f_reg_g, AA, BB, CC, [discrete, [A, B, C]]], 
+    [x, 0, 6], [y, 0, 8], 
+    [style, lines, lines, lines, lines, points],
+    [legend, "Regressionsgerade", "AA", "BB", "CC", "Data"]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Least Squares
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Maxima selbst hat hier auch eine Funktion zur Bestimmung der Variablen
+lsquares_estimates(data-matrix, coordinates, equation, variables)
+Diese liefert jeweils die Minima dieser Variablen!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f_lsquare: lsquares_estimates(data, [x, y], y = fab, [a, b]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f_reg_g: subst(f_lsquare[1], fab);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Fehlerfortpflanzung
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Bei einer Messung ist es in der Regel nicht möglich genaue Daten zu erhalten,
+man hat daher immer eine gewisse Ungenauigkeit: einen Fehler.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Die Toleranzen werden mittels +- angegeben und mit dem griechischen Delta gekennzeichnet.
+Wie sich diese Fehler auf das Ergebnis auswirken kann man mittels 2er Grafiken erkennen.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+lx: [[1.4, 0.2], [1.6, 0.2]];
+lx1: [[1.4, 0.2], [1.4, 1.4^3]];
+lx2: [[0, 1.4^3], [1.4, 1.4^3]];
+lx3: [[1.6, 0.2], [1.6, 1.6^3]];
+lx4: [[0, 1.6^3], [1.6, 1.6^3]];
+lx5: [[1.01, 1.4^3], [1.01, 1.6^3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([
+        x^3, 
+        [discrete, lx], [discrete,lx1], [discrete, lx2], [discrete, lx3], [discrete, lx4], [discrete, lx5]
+    ]
+    , [x, 1, 2], [y, 0, 10],
+    [color, blue, red, red, green, red, green, green],
+    [legend, "Funktion", "dx", "", "", "", "", "dR"],
+    [title, "Größeres x = Größere Ungenauigkeit"]
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: input   start ] */
+lx10: [[1.4, 0.2], [1.6, 0.2]];
+lx11: [[1.4, 0.2], [1.4, 1.4^4]];
+lx12: [[0, 1.4^4], [1.4, 1.4^4]];
+lx13: [[1.6, 0.2], [1.6, 1.6^4]];
+lx14: [[0, 1.6^4], [1.6, 1.6^4]];
+lx15: [[1.01, 1.4^4], [1.01, 1.6^4]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([
+        x^4, 
+        [discrete, lx10], [discrete,lx11], [discrete, lx12], [discrete, lx13], [discrete, lx14], [discrete, lx15]
+    ]
+    , [x, 1, 2], [y, 0, 10],
+    [color, blue, red, red, green, red, green, green],
+    [legend, "Funktion", "dx", "", "", "", "", "dR"],
+    [title, "Größere Steigung = Größere Ungenauigkeit"]
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Wir sehen also delta R ist abhängig von der größe der Einzelfehler, sowie der Steigung der Funktion.
+Dies lässt sich mit folgender Gleichung beschreiben:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+dR = abs(Rx(x0, y0) * dx) + abs(Ry(x0, y0) * dy);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Je mehr Variablen desto mehr Bestandteile hat die Gleichung
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Der relative Fehler in % kann nun berechnet werden indem man dR / R dividiert
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Vorgehensweise
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Basis
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wir benötigen die Formel und ihre ersten Ableitungen,
+sowie einen Datensatz mit Werten und Abweichungen
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+V_ab: 2*a*1*b;
+V_ab_a: diff(V_ab, a, 1);
+V_ab_b: diff(V_ab, b, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+data: [
+    [a = 2*10^(-3), da = 10^(-4)],
+    [b = 10*10^(-1), db = 10^(-3)]
+];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+V: subst(data[2], subst(data[1], V_ab));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dV: abs(V_ab_a*da) + abs(V_ab_b*db);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dRa: abs(V_ab_a*da);
+dRb: abs(V_ab_b*db);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dRa: subst(data[2], subst(data[1], dRa));
+dRb: subst(data[2], subst(data[1], dRb));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Absoluter Fehler
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Absoluter Fehler dR = sum(|Ri*di|)
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+dV_abs: subst(data[2], subst(data[1], dV)), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Relativer Fehler
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Relativer Fehler rR = dR / R
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+dV_rel: dV_abs / V, numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

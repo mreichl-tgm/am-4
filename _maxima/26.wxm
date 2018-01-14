@@ -1,0 +1,128 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Kredittilgung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kt_K0: 10000;
+kt_i: 0.1;
+kt_q: 1.1;
+kt_t: 4;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Jahr    |   Schuld      |   Zinsen  |   Annuität    |   Tilgung     |   Restschuld
+1       |   10000       |   1000    |   3154.71     |   2154.71     |   7845.29
+2       |   7845.29     |   784.53  |   3154.71     |   2370.18     |   5475.11
+3       |   5475.11     |   547.51  |   3154.71     |   2607.20     |   2867.92
+4       |   2867.92     |   286.79  |   3154.71     |   2867.92     |   0   => Es wurde alles zurückgezahlt!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kt_A: A = K0 * q^n * (q-1)/(q^n-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst([K0=kt_K0, q=kt_q, n=kt_t], kt_A);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Bsp.: Tilgungsplan
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angaben:
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K0: 75000;  /* Aufgenommener Kredit */
+q: 1.7;     /* Zinssatz */
+n: 7;       /* Jahre bis zur vollständigen Rückzahlung */
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Annuität:
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Jährlich zu zahlender Betrag */
+A: K0 * q^n * (q-1)/(q^n-1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Tilgungsplan:
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Funktion zum Runden auf 2 Kommastellen */
+round2(x):=round(x * 100) * 0.01;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* 
+Erstellt einen Tilgungsplan anhand folgender Angaben: 
+    K0  => Aufgenommener Kredit
+    q   => Zinssatz
+    n   => Jahre bis zur vollständigen Rückzahlung
+
+Zuletzt wird die erstellte Tabelle als .csv zurückgeliefert.
+*/
+tilgungsplan(K0, q, n):=block(
+    /* Legende */
+    csv: "Jahr, Schuld, Zinsen, Annuität, Tilgung, Restschuld",
+    print(csv),
+    /* Berechnung der Annuität */
+    K: round2(K0),
+    A: round2(K0 * q^n * (q-1)/(q^n-1)),
+    /* Berechnung der einzelnen Jahre */
+    for i: 1 thru n do (
+        /* Zinsen */
+        Z: round2(K * q - K),
+        /* Tilgung */
+        T: round2(A - Z),
+        /* Ausgabe und hinzufügen zum csv string */
+        line: concat(i, ", ", K, ", ", Z, ", ", A, ", ", T, ", ", round2(K - T)),
+        print(line),
+        csv: concat(csv, "\\n", line),
+        /* Neuer Schuldenstand */
+        K: round2(K - T)
+    ),
+    /* Zurückliefern des csv strings */
+    print(""),
+    print("Tabelle im .csv Format:"),
+    return(csv)
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tilgungsplan(K0, q, n);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

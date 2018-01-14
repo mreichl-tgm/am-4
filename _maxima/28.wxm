@@ -1,0 +1,80 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S28 - Taylorreihe
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Taylor Block
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+potenzreihe(function, x0, value, precision):=block(
+    /* Catch 0^0 error */
+    if (subst(x0, x, function) = 0) then (
+        out: 0
+    ) else (
+        out: 1
+    ),
+    /* Iteration */
+    for i: 1 thru precision do (
+        out: float(out + subst(x0, x, diff(function, x, i))^i/i! * value^i)
+    ),
+    /* Fehlerberechnung */
+    precision: precision + 1,
+    print("Fehler:", float(subst(x0, x, diff(function, x, precision))^precision/precision! * value^precision)),
+    return(out)
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Test 1 - exp(0.5)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+potenzreihe(exp(x), 0, 0.5, 0);
+potenzreihe(exp(x), 0, 0.5, 1);
+potenzreihe(exp(x), 0, 0.5, 2);
+potenzreihe(exp(x), 0, 0.5, 3);
+potenzreihe(exp(x), 0, 0.5, 4);
+potenzreihe(exp(x), 0, 0.5, 5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+exp(0.5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Test 2 - sin(0.5)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+potenzreihe(sin(x), 0, 0.5, 0);
+potenzreihe(sin(x), 0, 0.5, 1);
+potenzreihe(sin(x), 0, 0.5, 2);
+potenzreihe(sin(x), 0, 0.5, 3);
+potenzreihe(sin(x), 0, 0.5, 4);
+potenzreihe(sin(x), 0, 0.5, 5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+sin(0.5);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

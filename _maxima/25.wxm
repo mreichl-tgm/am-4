@@ -1,0 +1,173 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: section start ]
+Wirtschaftsmathematik Anwendungen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Abschreibungen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wirtschaftsgüter verlieren ihren Wert, dementsprechend spricht man von einem "Buchwert" und einem "Restwert".
+
+Die Art der Wertminderung und die Aufteilung auf die Nutzungsdauer nennt sich "Abschreibung".
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Nutzwert eines Objekts ergeben sich aus der folgenden Gleichung,
+beziehungsweise Reihe:
+
+* Anschaffungskosten        R0
+* Restwert nach einem Jahr  R1
+* Abschreibung              A1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+R_1 = R_0 - A_1;
+R_2 = R_1 - A_2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Lineare Abschreibung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei einer linearen Abschreibung ist der jährliche Abschreibungswert konstant.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[R_0, R_1, R_2, R_3];
+[R_0 - 0 * d, R_0 - 1 * d, R_0 - 2 * d, R_0 - 3 * d];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+# Beispiel
+
+Preis 65 000€
+Nutzungsdauer 5 Jahre
+Schrottwert 5000€
+
+Mit diesen Angaben erstellt man in der Regel eine Tabelle:
+
+Jahr    | Restwert zu Jahresbeginn  | Abschreibung  | Restwert zu Jahresende
+1       | 65 000                    | 12 000        | 53 000
+2       | 53 000                    | 12 000        | ...
+3       | ...                       | 12 000        | ...
+4       | ...                       | 12 000        | 5 000
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Geometrisch Degressive Abschreibung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei einer geometrisch degressiven Abschreibung wird jährlich ein Prozentsatz des Restwertes abgeschrieben.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+[R_0, R_1, R_2, R_3];
+[R_0 - 0 * d, R_0 - 1 * d, R_0 - 2 * d, R_0 - 3 * d];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Jahr    | Restwert zu Jahresbeginn  | Abschreibung      | Restwert zu Jahresende
+1       | 65 000                    | 40%               | 39 000
+2       | 26 000                    | 40%               | 23 400
+3       | ...                       | 40%               | ...
+4       | ...                       | 40%               | ...
+--------|---------------------------|-------------------|---------------------------
+1       | R0                        | A1 = i * R0       | R1 = R0 - A1 = R0 * (1-i)
+2       | R1 = R0 * (1-i)           | A2 = i * R1       | R2 = R1 - A2 = 
+        |                           |                   | R1 - i * R1 = 
+        |                           |                   | R1 * (1 - i) = 
+        |                           |                   | R0 * (1 - i)^2
+--------|---------------------------|-------------------|---------------------------
+n       | R(n-1) = R0 * (1-i)       | An = i * R(n-1)   | Rn = R0 * (1-i)^n
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gda(r0, i, nmax):= block(
+    an: i * r0,
+    rn: r0,
+    for n: 1 thru nmax do (
+        an: i * rn,
+        rn: r0 * (1-i)^n
+    ),
+    return([an, rn])
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beispiel für eine geometrisch degressive Abschreibung über 4 Jahre, mit einem Startwert von 65 000€ und 40% Abschreibung pro Jahr.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+gda(65000, 0.4, 4);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Rente
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unter einer Rente versteht man eine Folge von Zahlungen in gleicher Höhe und in gleiche Zeitabschnitten.
+
+Erfolgt die Rentenzahlung zu Beginn der Zeitabschnitten ist sie "vorschüssig", 
+erfolgt sie am Ende des Zeitabschnittes ist sie "nachschüssig".
+
+Die Anzahl der Zeitabschnitte definiert die "Lauftzeit".
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beispiele für Renten sind:
+Rückzahlung von Krediten, Versicherungen, Alterspension, ...
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+* Endwert   K0 = Kn / q^n   --> Aufzinsen
+* Barwert   Kn = K0 * q^n   --> Abzinsen
+                      q = 1 + i
+                              i = Prozentwert
+
+Beispiel: 1000€ mit 5% über 4 Jahre
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(1000 = K4 / (1 + 0.5)^4, K4), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Biespiel: 5000€ aus 1000€ über 5 Jahre
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(1000 = 5000 / (1 + i)^5, i)[5], numer;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

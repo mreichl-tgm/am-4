@@ -1,0 +1,154 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S07 Vorbereitung SA
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Bsp.: Regression
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqr: a*x^2+b*x+c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cube: a*x^3 + 9*b*x^2 + 27*c*x + d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d4: -16*a*x^4 + 9*c*x^2 + d;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+data: [
+    [1, 1],
+    [2, 3],
+    [3, 4],
+    [-3, 6]
+];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqr_extrem: lsquares_estimates(apply(matrix, data), [y, x], y = sqr, [a, b, c]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cube_extrem: lsquares_estimates(apply(matrix, data), [y, x], y = cube, [a, b, c, d]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d4_extrem: lsquares_estimates(apply(matrix, data), [y, x], y = d4, [a, c, d]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sqr_ls: subst(sqr_extrem, sqr);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+cube_ls: subst(cube_extrem, cube);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d4_ls: subst(d4_extrem, d4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d([sqr_ls, cube_ls, d4_ls, [discrete, [data[1], data[2], data[3], data[4]]]], 
+        [x, -4, 5], 
+        [y, -4, 10],
+        [style, lines, lines, lines, points, points, points, points],
+        [legend, "Funktion 2. Grades", "Funktion 3. Grades", "Funktion 4. Grades", "Daten"]
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Bsp. Quadrate mit quadratischer Grundfläche
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m: a^2*h*d;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m_a: diff(m, a);
+m_h: diff(m, h);
+m_d: diff(m, d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+data: [
+    [a = 11.8 * 10^-2, da = 0.1 * 10^-2],
+    [h = 14.3 * 10^-3, dh = 0.01 * 10^-3],
+    [d = 2.7 * 10^3, dd = 0.01 * 10^3]
+];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a_avg: data[1][1];
+h_avg: data[2][1];
+d_avg: data[3][1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Durchschnitt
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m_avg: subst(data[3][1], subst(data[2][1], subst(data[1][1], m)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+dm: abs(m*m_a) + abs(m*m_h) + abs(m*m_d);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Absoluter Fehler
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m_abs: subst(data[3], subst(data[2], subst(data[1], dm)));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Relativer Fehler
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m_rel: m_abs/m_avg  ;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Darstellung
+   [wxMaxima: subsect end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,924 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: comment start ]
+PORTFOLIO 07    Markus Reichl   4AHITM
+- 27.03.2017
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: title   start ]
+PF 07 - Unendliche Folgen und Reihen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Wiederholung und Vertiefung
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsect start ]
+Mengen und Folgen
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+                |   Mengen                      |   Folgen
+--------------------------------------------------------------------------------
+Formel          |   Mengenklammer {}            |   Folgenklammer <>
+                |                               |
+Enthalten       |   Elemente                    |   Glieder
+                |                               |
+Aufzählung      |   {1, 2, 3}                   |   <1, 2, 3>
+                |                               |
+Beschreibung    |   {n e N | 0 < n < 4}         |   <ai+1 = ai + 1>
+                |                               |
+Inhalt          |   Reihenfolge der Elemente    |   Reihenfolge der Glieder
+                |   ist irrelevant.             |   ist wesentlich.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Spezielle Folgen
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+                |   Arithmetische Folgen        |   Geometrische Folgen
+--------------------------------------------------------------------------------
+Bildungsgesetz  |   <a1, a2, a3, ...>           |   <b1, b2, b3, ...>
+                |      +d  +d  +d               |      *q  *q  *q
+                |                               |
+                |   =>  an+1 = an + d           |   =>  bn+1 = bn * q
+                |   =>  an = a1 + (n-1) * d     |   =>  bn = b1 * (n-1) ^ d
+                |                               |
+Summenformel    |   sn = sum(n, i=1, ai)        |   sn = b1 * 1 + sum(n, n=1, q^n)
+                |   sn = n * a1 + (n-1) * d     |   sn = b1 * (q^h - 1)/(q - 1)
+                |      = n/2 * (a1 + an)        |
+                |                               |
+Spezialfälle    |                               |   q > 1       Limes gegen unendlich
+                |                               |   q = 1       Konstant -> Limes gegen b1
+                |                               |   0 < q < 1   Limes gegen 0
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Arithmetische Reihe
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Sn = n * a1 + (n-1) * d * n/2
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Geometrische Reihe
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Sn = b1 * (q^n - 1)/(q - 1)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Wirtschaftsmathematik
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsect start ]
+Abschreibungen
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Wirtschaftsgüter verlieren ihren Wert, dementsprechend spricht man von einem "Buchwert" und einem "Restwert".
+Die Art der Wertminderung und die Aufteilung auf die Nutzungsdauer nennt sich "Abschreibung".
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Der Nutzwert eines Objekts ergeben sich aus der folgenden Gleichung,
+beziehungsweise Reihe:
+* Anschaffungskosten        R0
+* Restwert nach einem Jahr  R1
+* Abschreibung              A1
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+R_1 = R_0 - A_1;
+R_2 = R_1 - A_2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Lineare Abschreibung
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Bei einer linearen Abschreibung ist der jährliche Abschreibungswert konstant.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+[R_0, R_1, R_2, R_3];
+[R_0 - 0 * d, R_0 - 1 * d, R_0 - 2 * d, R_0 - 3 * d];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+# Beispiel
+Preis 65 000€
+Nutzungsdauer 5 Jahre
+Schrottwert 5000€
+Mit diesen Angaben erstellt man in der Regel eine Tabelle:
+Jahr    | Restwert zu Jahresbeginn  | Abschreibung  | Restwert zu Jahresende
+1       | 65 000                    | 12 000        | 53 000
+2       | 53 000                    | 12 000        | ...
+3       | ...                       | 12 000        | ...
+4       | ...                       | 12 000        | 5 000
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Geometrisch Degressive Abschreibung
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Bei einer geometrisch degressiven Abschreibung wird jährlich ein Prozentsatz des Restwertes abgeschrieben.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+[R_0, R_1, R_2, R_3];
+[R_0 - 0 * d, R_0 - 1 * d, R_0 - 2 * d, R_0 - 3 * d];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Jahr    | Restwert zu Jahresbeginn  | Abschreibung      | Restwert zu Jahresende
+1       | 65 000                    | 40%               | 39 000
+2       | 26 000                    | 40%               | 23 400
+3       | ...                       | 40%               | ...
+4       | ...                       | 40%               | ...
+--------|---------------------------|-------------------|---------------------------
+1       | R0                        | A1 = i * R0       | R1 = R0 - A1 = R0 * (1-i)
+2       | R1 = R0 * (1-i)           | A2 = i * R1       | R2 = R1 - A2 = 
+        |                           |                   | R1 - i * R1 = 
+        |                           |                   | R1 * (1 - i) = 
+        |                           |                   | R0 * (1 - i)^2
+--------|---------------------------|-------------------|---------------------------
+n       | R(n-1) = R0 * (1-i)       | An = i * R(n-1)   | Rn = R0 * (1-i)^n
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+gda(r0, i, nmax):= block(
+    an: i * r0,
+    rn: r0,
+    for n: 1 thru nmax do (
+        an: i * rn,
+        rn: r0 * (1-i)^n
+    ),
+    return([an, rn])
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Beispiel für eine geometrisch degressive Abschreibung über 4 Jahre, mit einem Startwert von 65 000€ und 40% Abschreibung pro Jahr.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+gda(65000, 0.4, 4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Rente
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Unter einer Rente versteht man eine Folge von Zahlungen in gleicher Höhe und in gleichen Zeitabschnitten.
+Erfolgt die Rentenzahlung zu Beginn der Zeitabschnitten ist sie "vorschüssig", 
+erfolgt sie am Ende des Zeitabschnittes ist sie "nachschüssig".
+Die Anzahl der Zeitabschnitte definiert die "Lauftzeit".
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Beispiele für Renten sind:
+Rückzahlung von Krediten, Versicherungen, Alterspension, ...
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+* Endwert   K0 = Kn / q^n   --> Aufzinsen
+* Barwert   Kn = K0 * q^n   --> Abzinsen
+                      q = 1 + i
+                              i = Zinssatz
+Beispiel: 1000€ mit 5% über 4 Jahre
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+solve(1000 = K4 / (1 + 0.5)^4, K4), numer;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Biespiel: 5000€ aus 1000€ über 5 Jahre
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Kredittilgung
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: comment start ]
+Die Kredittilgung beschreibt die Veränderung einer Schuld mit Zinsen, über einen gewissen Zeitraum.
+Die fixierte Betragsänderung pro Jahr nennt sich dabei Annuität und der konkrete Wert Tilgung.
+Insgesamt kann dadurch die Restschuld für das nächste Jahr bestimmt werden, welche wiederum zur Schuld wird.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kt_K0: 10000;
+kt_i: 0.1;
+kt_q: 1.1;
+kt_t: 4;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Mit den oben definierten Werten kann dann ein Plan zur Tilgung der Schuld erstellt werden.
+In diesem Beispiel wird ein Kredit von 10 000 Euro, über 4 Jahre, zu einem Zinssatz von 10% zurückgezahlt.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Jahr    |   Schuld      |   Zinsen  |   Annuität    |   Tilgung     |   Restschuld
+1       |   10000       |   1000    |   3154.71     |   2154.71     |   7845.29
+2       |   7845.29     |   784.53  |   3154.71     |   2370.18     |   5475.11
+3       |   5475.11     |   547.51  |   3154.71     |   2607.20     |   2867.92
+4       |   2867.92     |   286.79  |   3154.71     |   2867.92     |   0   => Es wurde alles zurückgezahlt!
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kt_A: A = K0 * q^n * (q-1)/(q^n-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+subst([K0=kt_K0, q=kt_q, n=kt_t], kt_A);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Tilgungsplan
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+K0: 75000;  /* Aufgenommener Kredit */
+q: 1.07;    /* Zinssatz */
+n: 7;       /* Jahre bis zur vollständigen Rückzahlung */
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Jährlich zu zahlender Betrag */
+A: K0 * q^n * (q-1)/(q^n-1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Funktion zur Erstellung eines Tilgungsplans
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+/* Funktion zum Runden auf 2 Kommastellen */
+round2(x):=round(x * 100) * 0.01;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/* 
+Erstellt einen Tilgungsplan anhand folgender Angaben: 
+    K0  => Aufgenommener Kredit
+    q   => Zinssatz
+    n   => Jahre bis zur vollständigen Rückzahlung
+Zuletzt wird die erstellte Tabelle als .csv zurückgeliefert.
+*/
+tilgungsplan(K0, q, n):=block(
+    /* Legende */
+    csv: "Jahr, Schuld, Zinsen, Annuität, Tilgung, Restschuld",
+    print(csv),
+    /* Berechnung der Annuität */
+    K: round2(K0),
+    A: round2(K0 * q^n * (q-1)/(q^n-1)),
+    /* Berechnung der einzelnen Jahre */
+    for i: 1 thru n do (
+        /* Zinsen */
+        Z: round2(K * q - K),
+        /* Tilgung */
+        T: round2(A - Z),
+        /* Ausgabe und hinzufügen zum csv string */
+        line: concat(i, ", ", K, ", ", Z, ", ", A, ", ", T, ", ", round2(K - T)),
+        print(line),
+        csv: concat(csv, "\\n", line),
+        /* Neuer Schuldenstand */
+        K: round2(K - T)
+    ),
+    /* Zurückliefern des csv strings */
+    print(""),
+    print("Tabelle im .csv Format:"),
+    return(csv)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tilgungsplan(K0, q, n);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Angebotsrechnung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gegeben sei eine Firma, welche 2 Angebote stellt:
+Angebot A:  6 Mio € sofort und dann 7 * 2 Mio € in Jahresabständen
+Angebot B:  5 * 4 Mio € in Jahresabständen
+Dazu kommt Kalkulationszinssatz von 5% p. Jahr
+    1           2           3           4           5           6           7               Jahre
+A   8           10.4        12.92       15.566      18.3443     21.261515   24.32459074     Millionen €
+---------------------------------------------------------------------------------------->
+B   0           4           12.61       17.2405     22.102525
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Angebot A ist für den Abnehmer besser geeignet, da dieser aufgrund der Zinsen insgesamt mehr Geld bezieht.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Funktion zur Auswertung eines Angebots
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Knr % 5 als Zeitpunkt zum durchrechnen
+Knr = 14    -->     Knr % 5 = 4     -->     über 4 Jahre
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+angebotsrechnung(time, value, percent, current):=block(
+    for i: 1 thru time do(
+        current: current * (1 + percent * 0.01) + value,
+        print("Jahr", i, "-", current)
+    )
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nach 4 Jahren
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+angebotsrechnung(4, 2, 5, 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Angebotsrechnung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gegeben sei eine Firma, welche 2 Angebote stellt:
+Angebot A:  6 Mio € sofort und dann 7 * 2 Mio € in Jahresabständen
+Angebot B:  5 * 4 Mio € in Jahresabständen
+Dazu kommt Kalkulationszinssatz von 5% p. Jahr
+    1           2           3           4           5           6           7               Jahre
+A   8           10.4        12.92       15.566      18.3443     21.261515   24.32459074     Millionen €
+---------------------------------------------------------------------------------------->
+B   0           4           12.61       17.2405     22.102525
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Angebot A ist für den Abnehmer besser geeignet, da dieser aufgrund der Zinsen insgesamt mehr Geld bezieht.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Funktion zur Auswertung eines Angebots
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Knr % 5 als Zeitpunkt zum durchrechnen
+Knr = 14    -->     Knr % 5 = 4     -->     über 4 Jahre
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+angebotsrechnung(time, value, percent, current):=block(
+    for i: 1 thru time do(
+        current: current * (1 + percent * 0.01) + value,
+        print("Jahr", i, "-", current)
+    )
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nach 4 Jahren
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+angebotsrechnung(4, 2, 5, 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Potenzreihen
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsect start ]
+Definition
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Summe an * x^n = a0 + a1 * x^1 + a2 * x^2 + ... + an * x^n von 0 bis unendlich
+--> an = Koeffizienten der Potenzreihe
+Wobei gilt:
+Es gibt einen Konvergenzradius R, sodass die Reihe für |x| < R konvergiert.
+--> R = lim(x->unendlich)|an/(an + 1)|
+Wenn konvergent, können Potenzreihen gliedweise gerechnet werden.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Nutzen
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+- Berechnung von Funktionswerten
+- Näherungsformeln
+- Integration
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Idee
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Anstatt eine Funktion f(x) auszuwerten, entwickelt man eine Potenzreihe 
+==> Es werden Zahlenwerte für die Koeffizienten berechnet.
+z.B.: sin(x) = x - x^3/6 + x^5/120 - x^7/5040
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Anwendung
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Angenommen man wüsste die Entwicklung einer Potenzreihe f(x) als f(x) = a0 + a1*x + a2*x^2 + ... und nehme an die Zahlen wären bestimmt. Dann könne man anschreiben:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x) = a_0 + a_1*x + a_2 * x^2;
+f_x(x) = a_1 + 2*a_2*x + 3*a_3*x^2;
+f_xx(x) = 2*a_2 + 5*a_3*x;
+f_xxx(x) = 6*a_3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Wobei gilt:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(0) = a_0;
+f_x(0) = a_1;
+f_xx(0)/2 = a_2;
+f_xxx(0)/6 = a_3;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Daher auch:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a_0 = f(0);
+a_1 = f_x(0)/1;
+a_2 = f_xx(0)/2;
+a_3 = f_xxx(0)/6;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+f(0) ist bei vielen Funktionen bekannt, zum Beispiel:
+sin(0) = 0
+cos(0) = 1
+Der Quotient bildet sich dabei aus der Fakultät (!) von n.
+Die Fakultät ist das Produkt aller Zahlen von 1 bis n.
+Bsp.:   3! = 1 * 2 * 3 = 6
+        5! = 1 * 2 * 3 * 4 * 5 = 120
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Wir haben nun eine allgemein gültige Regel:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(0) = sum(a_i*x^i,i,0,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(0) = sum((f^(i)(0))/(i!) * x^i,i,0,inf);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Beispiel
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: comment start ]
+Als Beispiel nehmen wir nun den sin(x).
+Dabei achten wir zunächst auf die benötigten Ableitungen:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(x) = sin(x);
+f_x(x) = cos(x);
+f_xx(x) = -sin(x);
+f_xxx(x) = -cos(x);
+f_xxxx(x) = sin(x);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Angewandt auf f(0), welches wir zur Berechnung benötigen kommen wir dabei auf folgende Werten:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f(0) = 0;
+f_x(0) = 1;
+f_xx(0) = 0;
+f_xxx(0) = -1;
+f_xxxx(0) = 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Damit können wir nun die einzelnen Glieder der Potenzreihe berechnen:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+a_0 = f(0)/0!;
+a_1 = f_x(0)/1!;
+a_2 = f_xx(0)/2!;
+a_3 = f_xxx(0)/3!;
+a_4 = f_xxxx(0)/4!;
+a_5 = f_xxxxx(0)/5!;
+a_6 = f_xxxxxx(0)/6!;
+a_7 = f_xxxxxxx(0)/7!;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Die oben berechneten Werte eingesetzt sieht man, dass nur jede ungerade Iteration einen Wert ungleich null hat, dadurch müssen nur noch diese bei der Berechnung beachtet werden.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+Eine Kette von:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sin(x) = a_0*x^0 + a_1*x^1 + a_2*x^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+wird nun zu:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+sin(x) = 1 - 1/6*x^3 + 1/120*x^5 - 1/5040*x^7;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Eulersche Formel
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Dieses vorgehen kann auch verwendet werden um auf eine Formel zu kommen, welche vor allem bei komplexen Zahlen zur Anwendung kommt:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+e^x = 1 + x + x^2/2! + x^3/3!;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Für x wird nun jy (eine komplexe Zahl) eingesetzt:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+e^jy = 1 + jy + (jy)^2/2! + (jy)^3/3!;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Diese Gleichung kann auf beide Variablen aufgelöst werden, wodurch man auf folgendes kommt:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+e^jy = 1 - y^2/2! + y^4/4! + j*(y - y^3/3! + y^5/5!);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Der erste Teil könnte nun als j*sin(y) und der zweite als cos(y) zusammengefasst werden. Dadurch entsteht die Euler'sche Formel:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+e^jy = cos(y) + j*sin(y);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+Weitere Beispiele
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+- Sinus als Potenzreihe aufstellen
+- sin(0.5) als Potenzreihe mit dem Ergebnis von Maxima vergleichen
+    - Genauigkeit von 1-7 einsetzen
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsect start ]
+Sinus als Potenzreihe
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: comment start ]
+Der Sinus als Potenzreihe berechnet kann mit folgendem Ablauf bestimmt werden.
+Zur weiteren Verwendung ist der Block so abstrakt gehalten, dass eine beliebige Funktion verwendet werden kann.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+potenzreihe(function, number, precision):=block(
+    value: subst(0, x, function) / 1,
+    for i: 1 thru precision do (
+        value: float(value + subst(0, x, diff(function, x, i)^i/i!) * number^i)
+    ),
+    return(value)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+potenzreihe(sin(x), 0.5, 10);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsect start ]
+sin(0.5)
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+sinMaxima: sin(0.5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sinPotenz: potenzreihe(sin(x), 0.5, 10);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(sin(x), [x, 0, 10], [y, -1, 1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+wxplot2d(x/1! - x^3/3! + x^5/5! - x^7/x! + x^9/9! - x^11/11!, [x, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Wie man sieht kommt wxMaxima rechnerisch auf ein nahezu identes Ergebnis, die Darstellung wird jedoch erst bei hoher Präzision genau.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Genauigkeit 1-7
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+sinPotenz1: potenzreihe(sin(x), 0.5, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sinPotenz3: potenzreihe(sin(x), 0.5, 3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sinPotenz7: potenzreihe(sin(x), 0.5, 7);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Im Vergleich kommt man bereits bei wenigen Iterationen zu sehr genauen Ergebnissen.
+Die ersten 3 Stellen stimmen bereits nach 3 durchläufen.
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Taylorreihe
+   [wxMaxima: section end   ] */
+/* [wxMaxima: fold    start ] */
+/* [wxMaxima: subsect start ]
+Taylor Block
+   [wxMaxima: subsect end   ] */
+
+/* [wxMaxima: input   start ] */
+potenzreihe(function, x0, value, precision):=block(
+    /* Catch 0^0 error */
+    if (subst(x0, x, function) = 0) then (
+        out: 0
+    ) else (
+        out: 1
+    ),
+    /* Iteration */
+    for i: 1 thru precision do (
+        out: float(out + subst(x0, x, diff(function, x, i))^i/i! * value^i)
+    ),
+    /* Fehlerberechnung */
+    precision: precision + 1,
+    print("Fehler:", float(subst(x0, x, diff(function, x, precision))^precision/precision! * value^precision)),
+    return(out)
+);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Test 1 - exp(0.5)
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+potenzreihe(exp(x), 0, 0.5, 0);
+potenzreihe(exp(x), 0, 0.5, 1);
+potenzreihe(exp(x), 0, 0.5, 2);
+potenzreihe(exp(x), 0, 0.5, 3);
+potenzreihe(exp(x), 0, 0.5, 4);
+potenzreihe(exp(x), 0, 0.5, 5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+exp(0.5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: subsubsect start ]
+Test 2 - sin(0.5)
+   [wxMaxima: subsubsect end   ] */
+
+/* [wxMaxima: input   start ] */
+potenzreihe(sin(x), 0, 0.5, 0);
+potenzreihe(sin(x), 0, 0.5, 1);
+potenzreihe(sin(x), 0, 0.5, 2);
+potenzreihe(sin(x), 0, 0.5, 3);
+potenzreihe(sin(x), 0, 0.5, 4);
+potenzreihe(sin(x), 0, 0.5, 5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sin(0.5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: fold    end   ] */
+
+
+/* [wxMaxima: section start ]
+Näherungsformeln
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Multiplikation nach Reihenentwicklung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es soll gezeigt werden, dass folgende Funktionen annähernd gleich sind
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_l: exp(-3/x)*sin(2*x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fx_r: 2*x - 2*x^2/3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Wie man sieht liefert die Reihe zur Funktion allein nicht das erwünschte Ergebnis
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l: taylor(fx_l, x, 0, 3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Händisch multipliziert sieht man jedoch sofort den Zusammenhang.
+Die Reihe wird auf 2 Glieder begrenzt, da auch die zweite Funktion nur aus 2 Gliedern besteht.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_e: taylor(exp(-x/3), x, 0, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_s: taylor(sin(2*x), x, 0, 2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tfx_l_e * tfx_l_s;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Integration nach Reihenentwicklung
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Gu: 0.5 + 1/sqrt(2*%pi) * integrate(exp(-x^2/2), x, 0, 1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1: taylor(exp(-x^2/2), x, 0, 10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Gut1: 0.5 + 1/sqrt(2*%pi) * integrate(t1, x, 0, u);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+float(subst(1, u, Gut1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Auswertung / Berechnung von Grenzwerten
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beispiel
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lim: limit(xsin(x)/x, x, 0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tsin: taylor(sin(x) / x, x, 0, 10);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+limtsin: limit(tsin, x, 0);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

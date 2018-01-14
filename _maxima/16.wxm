@@ -1,0 +1,322 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S16 - Anwendung von DGL II
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Wiederholung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beispiel: 3.43)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es handelt sich vermutlich um ein beschränktes Wachstum.
+
+Aus "25000 Stk. / Tag" erkennen wir, dass in Zeit gerechnet werden muss.
+Der Verkaufsstart bezeichnet t = 0, daraus folgt y(0) = 25 000.
+
+Die Verkaufrate wird wohl bei 8000 Stk. / Tag stehen bleiben, daher K = 8000.
+
+Der Absatz sinkt um 10% pro Woche, woraus wir erkennen, dass die Verkaufsrate (0.1 / 7) Prozent pro Tag entspricht.
+Also k = 1 / 70
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: 25000;
+K: 8000;
+k: 1 / 70;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+1)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mithilfe der oben angegeben Werte kann die Wachstumsfunktion als Differentialgleichung dargestellt werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: solve('diff(y, t) = k*(K - y), y);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+2)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mittels ode2(equation, result_var, vars) kann differenziert werden.
+Mit ic1(equation, *var) wird versucht die Gleichung mit einer Nebenbedingung zu lösen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yta: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytb: ic1(yta, y=y0, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Darstellung der Absätze über ein Jahr
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rhs(ytb), [t, 0, 365]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+3)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(subst(10000, y, ytb), t)[1], numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nach 150 Tagen liegt der Absatz bei unter 10000 Stück pro Tag
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Alternative Möglichkeiten:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+find_root(subst(10000, y, ytb), t, 0, 25000);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+4)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Der Wert t wird um 2 Wochen (14 Tage erhöht)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t1: rhs(solve(subst(15000, y, ytb), t)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t2: t1 + 14;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(t1, t, ytb);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(t2, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Physik
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Kraft
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kräfte in der Physik können häufig durch Differentialgleichungen beschrieben werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F = m*a;
+v = ds/dt;
+a = dv/dt;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+v = ds / dt =>  s = integrate(v * dt)
+a = dv / dt =>  v = integrate(a * dt)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+a = a^2*s/dt^2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F: m*dv/dt;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F_R: b*v;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F = F_A - F_R;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beispiel: 3.50)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Am Ende des Hangs entspricht 0s mit 36km/h, daraus folgt y0 = 36.
+
+Es existiert kein Antrieb, daher F_A = 0.
+
+Die Gesamtmasse der Objekte entspricht 54kg. Die Kraft die ihnen entgegenwirkt entspricht 30kg/s*v.
+
+Aufgrund der Einheitsunterschiede sollte auf m/s umgerechnet werden, daher y0 = 36 / 3.6 m/s.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m: 54;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F_R: 30 * v;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F_A: 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+1)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zur Ermittlung der Funktion muss die Gleichung nach v gelöst werden.
+Da die Geschwindigkeit in F als Differentialgleichung angegeben ist, muss diese auch als solche gelöst werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+F: m*'diff(v, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvt: F = F_A - F_R;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Lösung selbst kann wieder mit der Funktion ode2 gefunden werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvta: ode2(Fvt, v, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+2)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mittels ic1(equation, *values) wird eine partielle Lösung aus den angegebenen Werten ermittelt:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+Fvtp: ic1(Fvta, v=10, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+3)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die partielle Lösung kann nun dargestellt werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(rhs(Fvtp), [t, 0, 10]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+4)
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Gleichung der Zeit bei welcher die Rodel 15 Meter zurückgelegt hat,
+kann durch Lösung von 15 = dem Integral der Lösung angegeben werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+t_s15: solve(15 = integrate(rhs(Fvtp), t), t)[5];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+s0_10: integrate(rhs(Fvtp), t, 10, 0), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Die Rodel kann also einen Weg von 17.93 Meter zurücklegen.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

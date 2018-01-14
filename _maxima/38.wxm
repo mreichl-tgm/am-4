@@ -1,0 +1,156 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S38 Grafik im R2
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Drehung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Dreieck ABC soll um 60 Grad am Punkt B gedreht werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: [0, 0];
+B: [5, 1];
+C: [3, 5];
+mA: matrix([0], [0]);
+mB: matrix([5], [1]);
+mC: matrix([3], [5]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tABC: triangle(A, B, C);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(head_type=empty, proportional_axes=xy, fill_color=white, tABC);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Verschieben
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+m0B: mB - 0;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mA1: mA - m0B;
+mB1: mB - m0B;
+mC1: mC - m0B;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tABC1: triangle([-5, -1], [0, 0], [-2, 4]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(head_type=empty, proportional_axes=xy, fill_color="white", tABC, color="red", tABC1);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Kontrolle
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mB1 = mA;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Drehen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+phi: 300*%pi/180;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+D: matrix([cos(phi), sin(phi)], [-sin(phi), cos(phi)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mA2: D . mA1;
+mB2: D . mB1;
+mC2: D . mC1;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tABC2: triangle(
+    [sqrt(3)/2-5/2, -(5*sqrt(3))/2-1/2],
+    [0, 0], 
+    [-2*sqrt(3)-1, 2-sqrt(3)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+draw2d(head_type=empty, proportional_axes=xy, fill_color="white", tABC, color="red", tABC1, color="green", tABC2);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Kontrolle
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mb1 = mb2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Verschieben
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+mA3: mA2 + m0B;
+mB3: mB2 + m0B;
+mC3: mC2 + m0B;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+tABC3: triangle(
+    [sqrt(3)/2+5/2, 1/2-(5*sqrt(3))/2],
+    [5, 1], 
+    [4-2*sqrt(3), 3-sqrt(3)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxdraw2d(head_type=empty, proportional_axes=xy, transparent=true, 
+    color="blue", key="Start", tABC, 
+    color="red", key="Verschoben", tABC1, 
+    color="green", key="Gedreht", tABC2, 
+    color="violet", key="Verschoben", tABC3);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

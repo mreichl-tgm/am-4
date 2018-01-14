@@ -1,0 +1,294 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: section start ]
+Anwendung von DGL 1. Ordnung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Wachstumsmodelle
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Lineares Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unbeschränktes Wachstum um einen konstanten Faktor
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = 6
+y(t)    = 6t + C
+y(0)    = C
+y(t)    = y(0) +6t
+y(t)    = 6t + C
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Exponentielles Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unbeschränktes Wachstum um eine konstante Wachstumsrate
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k * y
+dy / dt = k * y
+dy / y  = k * dt
+ln(y)   = k * t + C
+y       = e^(k*t) * C
+y       = C * e^t       // e^k ist wie C konstant
+y       = C * a^t       // Eine beliebige Basis wird as Wachstumsfaktor bezeichnet
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y       = C * a^t;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beschränktes Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k*(1 - y(t) / K)      k ... Wachstumsrate
+                                K ... Beschränkungsfaktor
+dy      = k * (1 - y / K) * dt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yp      = k*(1 - y(t) / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Logistisches Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate, 
+auf Basis der Population, bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k * y * (1 - yt / K)
+y(t)    = y(0) * K / (y(0) + K - y(0) * e^((-k) * t))
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y(t)    = y(0) * K / (y(0) + K - y(0) * e^((-k) * t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Bsp. 3.44
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Tierpopulation von 150 auf 350 in 3 Jahren
+=>  y(0) = 150
+=>  y(3) = 350
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Lineares Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: 150;
+y3: 350;
+t3: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: rhs(solve(y3 = y0 + k * t3, k)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yt: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: ic1(yt, y=150, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3: ic1(yt, y=350, t=3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Exponentielles Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: 150;
+y3: 350;
+t3: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3 = C * a^t3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k * y;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yt: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: ic1(yt, y=150, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3: ic1(yt, y=350, t=3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Beschränktes Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+K       = 900
+y0      = 150
+y(3)    = 250
+t       = 3
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K: 900;
+y0: 150;
+y3: 250;
+t3: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: rhs(solve(y3 = K + (y0 - K) * exp((-k) / K * t3), k)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k*(1 - y / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yt: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: ic1(yt, y=150, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3: ic1(yt, y=350, t=3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Logistisches Wachstum
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K: 900;
+y0: 150;
+y3: 250;
+t3: 3;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: rhs(solve(y3 = y0 * K / (y0 + (K-y0)*exp(-k*t3)), k)[3]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k*(1 - y / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yt: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0: ic1(yt, y=150, t=0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y3: ic1(yt, y=350, t=3);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

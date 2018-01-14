@@ -1,0 +1,117 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Verschlüsselung
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: comment start ]
+        Umwandlung  Kodierung
+        =>          =>
+Text        Zahl        Verschlüsselt
+        <=          <=
+        Umwandlung  Dekodierung
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Symmetrische Verfahren
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+1 Schlüssel wird zum Ver- und Entschlüsseln verwendet
+
+Bsp.: Cäsar
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Asymmetrische Verfahren
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Unterschiedliche Schlüssel für Ver- und Entschlüsselung
+
+Bsp.: RSA
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Symmetrische Verfahren am Beispiel - Cäsar
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Nachricht: "Bravo"
+
+N = "BRAVO"
+
+x = 02 18 01 22 15      => Umgewandelt
+
+y = (x + c) % 27        => Verschoben um c
+
+N' = "JZICW"            => Umgewandelt
+
+x = (y + 27 - c) % 27   => Dekodierung
+
+N = "BRAVO"
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Asymmetrische Verfahren am Beispiel - RSA
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Private Key
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+A wählt 2 Primzahlen p und q. Diese bleiben geheim und bilden den PRIVATE KEY
+Zusätzlich wählt er die Zahl e, welche teilerfremd (kein gemeinsamer Primfaktor) zu (p-1) und (q-1) ist.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Public Key
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+A veröffentlicht n = p*q und e, welche seinen PUBLIC KEY bilden
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Verschlüsselung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+B möchte an A senden und holt sich dessen PUBLIC KEY.
+
+Danach wandelt B seinen Text in Zahlen um und teilt diesen in gleich lange Blöcke x.
+
+Die resultierende Nachricht lautet y = x^e % n
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Entschlüsselung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+A erhält y von B und ermittelt nun x aus x = y^d % n, 
+wobei d den PRIVATE KEY beschreibt und als d = (1 + k(p-1)(q-1)) / e definiert ist.
+k ist dabei eine natürliche Zahl
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

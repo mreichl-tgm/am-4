@@ -1,0 +1,75 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+Unendliche Folgen und Reihen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Wiederholung und Vertiefung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Mengen und Folgen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+                |   Mengen                      |   Folgen
+--------------------------------------------------------------------------------
+Formel          |   Mengenklammer {}            |   Folgenklammer <>
+                |                               |
+Enthalten       |   Elemente                    |   Glieder
+                |                               |
+Aufzählung      |   {1, 2, 3}                   |   <1, 2, 3>
+                |                               |
+Beschreibung    |   {n e N | 0 < n < 4}         |   <ai+1 = ai + 1>
+                |                               |
+Inhalt          |   Reihenfolge der Elemente    |   Reihenfolge der Glieder
+                |   ist irrelevant.             |   ist wesentlich.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Spezielle Folgen
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+                |   Arithmetische Folgen        |   Geometrische Folgen
+--------------------------------------------------------------------------------
+Bildungsgesetz  |   <a1, a2, a3, ...>           |   <b1, b2, b3, ...>
+                |      +d  +d  +d               |      *q  *q  *q
+                |                               |
+                |   =>  an+1 = an + d           |   =>  bn+1 = bn * q
+                |   =>  an = a1 + (n-1) * d     |   =>  bn = b1 * (n-1) ^ d
+                |                               |
+Summenformel    |   sn = sum(n, i=1, ai)        |   sn = b1 * 1 + sum(n, n=1, q^n)
+                |   sn = n * a1 + (n-1) * d     |   sn = b1 * (q^h - 1)/(q - 1)
+                |      = n/2 * (a1 + an)        |
+                |                               |
+Spezialfälle    |                               |   q > 1       Limes gegen unendlich
+                |                               |   q = 1       Konstant -> Limes gegen b1
+                |                               |   0 < q < 1   Limes gegen 0
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Finanzmathematik
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: section start ]
+Potenzreihen
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: section start ]
+Fourierreihen
+   [wxMaxima: section end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

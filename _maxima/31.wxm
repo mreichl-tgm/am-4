@@ -1,0 +1,110 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: comment start ]
+Markus Reichl, 4AHITM, 04.04.2017
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: title   start ]
+H31 - Zahlentheorie und Matrizen
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Einführung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Division mit Rest (Modulo)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Definition
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es sei x (x Element der natürlichen Zahlen) eine beliebige natürliche Zahl mit n >= 2, n Element der natürlichen Zahlen 
+n ... Modul
+
+Dann gilt: x = q*n + r
+q ... Quotiont der Ganzzahldivision
+r ... Nicht negativer Rest
+
+Kurzschreibweise:
+r = x mod n
+r = x - n * int(x/n)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es gibt für Modulo n genau n Restklassen
+{0, 1, 2, ..., n - 1}
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Kongruenz (Restgleich)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Definition
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kongruent heißen 2 natürliche Zahen dann, wenn diese modulo n, denselben, nicht negativen, Rest haben.
+==> a === b
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+2 Kongruenz Regeln
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kongruenzen können multipliziert werden:
+a === b und c === d     ==>     a * c === b * d
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+Kongruenzen können zu gleichen Potenzen erhöht werden:
+a === b     ==>     a^k === b^k     (k = 1, ...)
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Square and Multiply
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Eine Zahl wird in Zweierpotenzen zerlegt.
+
+Bsp.: 9^23 mod 7
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+9^23 = 9^16 * 9^4 * 9^2 * 9
+9       === 2
+9^2     === 2^2 === 4
+9^4     === 4^2 === 16 === 2
+9^16    === 2^4 === 16 === 2
+
+=> 9^23 === 2 * 4 * 2 * 2
+        === 2^5 === 2^2 * 2^2 * 2
+        === 2
+
+=> 9^23 === 2
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

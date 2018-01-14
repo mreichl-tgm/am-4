@@ -1,0 +1,370 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+S15 Beschränktes Wachstum
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+Beschränktes Wachstum
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k*(1 - y(t) / K)      k ... Wachstumsrate
+                                K ... Beschränkungsfaktor
+dy      = k * (1 - y / K) * dt
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yp      = k*(1 - y(t) / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K: 1035;
+k: 0.2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bw: K + (y0 - K)*exp((-k)/K * x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([subst(0, y0, bw), subst(25, y0, bw), subst(50, y0, bw), subst(100, y0, bw)], [x, 0, 20000]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Das Wachstum der Menge nimmt bis zum Erreichen der Grenze stetig ab und gleicht sich 0 an
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Logistisches Wachstum
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Beschränktes Wachstum um eine konstante Wachstumsrate, 
+auf Basis der Population, bis zu einer bestimmten Grenze
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: comment start ]
+y°      = k * y * (1 - yt / K)
+y(t)    = y(0) * K / (y(0) + K - y(0) * e^((-k) * t))
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y(t)    = y(0) * K / (y(0) + (K - y(0)) * e^((-k) * t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K: 1035;
+k: 0.2;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+lw: y0 * K / (y0 + (K - y0)*exp((-k) * x));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([subst(10, y0, lw), subst(50, y0, lw), subst(200, y0, lw)], [x, 0, 60]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zu sehen ist ein exponentieller Anstieg zu Beginn, dessen Sättigung mit der Zeit abnimmt.
+Anders erklärt je näher der Wert der Kapazitätsgrenze kommt, desto kleiner wird die Wachstumsrate.
+Je höher der Startwert, desto früher wird die Grenze erreicht und desto schneller steigt die Menge an.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Aufgaben
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: subsect start ]
+3.45)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Gleichung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei der Wachstumsfunktion handelt es sich um ein logistisches Wachstum, diese wird wie folgt definiert:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yt: y0 * K / (y0 + (K - y0)*exp((-k) * t));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+oder als:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k* y * (1 - y / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yta: ode2(ytp, y, t);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mit dem Startwert (Nebenbedingung) kann die Formel für K aufgestellt werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y14b: ic1(yta, y=250, t=14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y14: 250 = subst(14, t, yt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k14b: solve(y14b, k)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K14b: logcontract(solve(y14b, K)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(subst(k14b, K14b), K)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K14b: solve(exp(lhs(K14b)) = exp(rhs(K14b)), K)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k14: solve(y14, k)[14];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K14: solve(y14, K)[1];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Berechnung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y24: 320;
+t24: 24;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y24: 320 = subst(24, t, yt);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y24a: ic1(yta, y=320, t=24);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k24: solve(y24, k)[24];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K24: subst(k24, solve(y24, K)[1]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+y0_80: 80;
+y0_100: 100;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k14_80: subst(80, y0, k14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k14_100: subst(100, y0, k14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K14_80: subst(y0_80, y0, K14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+K14_100: subst(y0_100, y0, K14);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+solve(subst(k14_80, K14_100), K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+3.46)
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Es sind folgende Anfangswerte gegeben:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+k: 0.031395;
+K: 197274;
+y0: 2890;
+t0: 1780;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Gleichung
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zu Beginn soll die Differentialgleichung angegeben werden:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytp: 'diff(y, t) = k * y *(1 - y / K);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Diese können wir mittels ode2(equation, result, vars) lösen
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+yta: ratsimp(ode2(ytp, y, t) * 6279 / 200000);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Auf die Partielle Lösung kommen wir anhand Nebenbedigung y0 = 250.
+Diese kann mittels ic1(equation, result_var, vars) oder durch substitution erreicht werden.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ytb: ic1(yta, y=y0, t=t0);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsubsect start ]
+Vergleich
+   [wxMaxima: subsubsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1790, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1820, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1850, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1890, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1920, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1940, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(1970, t, ytb), numer;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Zusammenfassung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Bei mir kamen nahezu keine sinnvollen Ergebnisse bei der Berechnung mit Maxima heraus.
+Mit der Hand ging zwar das meiste aber dann traten teilweise negative Logarithmen auf.
+   [wxMaxima: comment end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

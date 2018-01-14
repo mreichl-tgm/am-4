@@ -1,0 +1,166 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 17.10.1 ] */
+/* [wxMaxima: title   start ]
+H05 - Methode der kleinsten Quadrate
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: section start ]
+S05 Zusammenfassung
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Messungen haben in der Regel keine idealen Abhängigkeiten sondern Tendenzen.
+Diese sollen durch mathematische Formeln beschrieben werden.
+
+In unserem Beispiel nehmen wir die Punkte A, B und C welche um die Gerade
+y = a*x + b liegen.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Beispiel
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fab: a * x + b;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+A: [2, 1];
+B: [3, 3];
+C: [5, 4];
+M: apply(matrix, [A, B, C]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+fab_a: diff(fab, a);
+fab_b: diff(fab, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d([discrete, [A, B, C]], [x, 0, 6], [y, 0, 5], [style, points]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Gesucht ist eine passende Gerade welche den gleichen Abstand zu allen Punkten hat.
+=> Normaler Abstand zu allen Punkten ist gleich
+=> Vertikaler Abstand ist       möglichst klein
+=> AA' + BB' + CC'              möglichst klein
+=> (AA')^2 + (BB')^2 + (CC')^2  möglichst klein
+=> F(a, b) = sum(a * xi + b - yi, i, 1, m)
+
+Eine möglichst kleine Stelle erhalten wir durch suchen der Senken!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Linear Regression
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Zur einfacheren Verwendung der Formel wird ein Block verwendet:
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+linregr(f, points):=block(
+    sum((subst(points[i][1], x, f) - points[i][2]) ^ 2, i, 1, length(points))
+);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_reg: linregr(fab, [A, B, C]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Mit diesem Ergebnissen lassen sich nun Ableitungen null setzen wodurch wir die Extremwerte bestimmen können.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_reg_a: diff(f_reg, a);
+f_reg_aa: diff(f_reg_a, a);
+f_reg_b: diff(f_reg, b);
+f_reg_bb: diff(f_reg_b, b);
+f_reg_ab: diff(f_reg_a, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_reg_solve: solve([f_reg_a = 0, f_reg_b = 0]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+subst(f_reg_solve[1][2], subst(f_reg_solve[1][1], fab));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+Abgeleitet und nullgesetzt erhalten wir nur 2 mögliche Werte und davon jeweils einen pro Variable.
+Diese setzen wir nun in die Lineare Gleichung ein und erhalten die Regressionsgerade.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_reg_g: subst(f_reg_solve, fab);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+AA: [discrete, [A, [A[1], subst(A[1], x, f_reg_g)]]];
+BB: [discrete, [B, [B[1], subst(B[1], x, f_reg_g)]]];
+CC: [discrete, [C, [C[1], subst(C[1], x, f_reg_g)]]];
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+wxplot2d(
+    [f_reg_g, AA, BB, CC, [discrete, [A, B, C]]], 
+    [x, 0, 6], [y, 0, 8], 
+    [style, lines, lines, lines, lines, points],
+    [legend, "Regressionsgerade", "AA", "BB", "CC", "Data"]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Least Squares
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: comment start ]
+Maxima selbst hat hier auch eine Funktion zur Bestimmung der Variablen
+lsquares_estimates(data-matrix, coordinates, equation, variables)
+
+Diese liefert jeweils die Minima dieser Variablen!
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_lsquare: lsquares_estimates(M, [x, y], y = fab, [a, b]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+f_reg_g: subst(f_lsquare[1], fab);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
